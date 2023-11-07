@@ -36,6 +36,8 @@
 <script lang="ts" setup>
 import {ref} from "vue";
 import {clientHttp} from "../libs/clientHttp"
+import { useToast } from "vue-toast-notification";
+const $toast = useToast();
 const mail = ref({
   fullName: "",
   email:"",
@@ -45,9 +47,10 @@ const mail = ref({
 async function sendMail(){
 try{
   if(mail.value.fullName.trim() === "" && mail.value.email.trim() === "" && mail.value.subject.trim() === "" && mail.value.message.trim() === ""){
-    console.log("Tous les champs sont requis")
+    $toast.warning("Tous les champs sont requis")
   }
   const response = await clientHttp.post('/users/sendMail',mail.value)
+  $toast.success('Mail envoyé avec suucès')
   console.log('response',response.data)
   mail.value = {
   fullName: "",
@@ -56,7 +59,7 @@ try{
   message: "" 
 }
 }catch(error){
-  console.log(error)
+  $toast.error('Erreur')
 }
 }
 </script>
