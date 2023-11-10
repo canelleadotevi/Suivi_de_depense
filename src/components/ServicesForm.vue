@@ -50,7 +50,7 @@ try{
     $toast.warning("Tous les champs sont requis")
   }
   const response = await clientHttp.post('/users/sendMail',mail.value)
-  $toast.success('Mail envoyé avec suucès')
+  $toast.open({message: "Mail envoyé avec suucès",position: "top-right", duration: 3000})
   console.log('response',response.data)
   mail.value = {
   fullName: "",
@@ -59,7 +59,8 @@ try{
   message: "" 
 }
 }catch(error){
-  $toast.error('Erreur')
+  $toast.open({message: "Erreur ",position: "top-right", duration: 3000})
+
 }
 }
 </script>

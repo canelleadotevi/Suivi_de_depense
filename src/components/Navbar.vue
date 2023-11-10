@@ -4,7 +4,7 @@
       <RouterLink class="navbar-brand" to="#">
         <Logo></Logo>
       </RouterLink>
-      <span style="position: absolute; top: 40%;color:  #17627a; right: 10%;">{{ userEmail }}</span>
+      <span style="position: absolute; top: 40%;color:  #17627a; right: 10%;"><span style="color:#17627a; display: flex;gap: 5px;"><Profil/><span style="margin-top: 5px;">{{ userEmail }}</span></span></span>
       <button class="navbar-toggler position-fixed end-0 top-1 me-3 " type="button" data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation"
         style="background-color: #17627a ; border-radius: 7px!important;">
@@ -22,25 +22,23 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
-              <a class="nav-link active" style="color: #07171c;" aria-current="page" href="/accueil">Home</a>
+              <a class="nav-link active" style="color: #07171c;" aria-current="page" href="/accueil"><span style="color:#17627a; display: flex;gap: 5px;"> <HomeIcon/><span style="margin-top: 5px;"> Home</span></span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" style="color: #17627a;" href="/addCategory">Catégories des dépenses</a>
+              <a class="nav-link" style="color: #17627a;" href="/addCategory"><span style="color:#17627a; display: flex;gap: 5px;"><CategoryIcon/><span style="margin-top: 5px;"> Catégories des dépenses </span></span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" style="color: #17627a;" href="/depenses">Comptes</a>
+              <a class="nav-link" style="color: #17627a;" href="/depenses"><span style="color:#17627a; display: flex;gap: 5px;"><ComptesIcon/><span style="margin-top: 5px;">Comptes</span></span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" style="color: #17627a;" href="/pLanification">Planification mensuelles</a>
+              <a class="nav-link" style="color: #17627a;" href="/pLanification"><span style="color:#17627a; display: flex;gap: 5px;"><PlanningIcon/><span style="margin-top: 5px;">Planification mensuelles</span></span></a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="/depenses" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false" style="color: #17627a;">
-                Dépenses
-              </a>
+            <li class="nav-item">
+              <a class="nav-link" style="color: #17627a;" href="#"><span style="color:#17627a; display: flex;gap: 5px;"><Settings/><span style="margin-top: 5px;">Paramètres</span></span></a>
             </li>
-            <li @click="logOut"><img style="width: 30px; height: 30px; top: 20px; left: 10px;"
-                src="@/assets/images/logOut.png" alt=""></li>
+            <li @click="logOut" class="nav-item">
+              <a class="nav-link" style="color: #17627a;" href="#"><span style="color:#17627a; display: flex;gap: 5px;"><LogOut/><span style="margin-top: 5px;">Déconnexion</span></span></a>
+            </li>
           </ul>
           <form class="d-flex mt-3" role="search" style="top: 20px!important;">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
@@ -59,7 +57,13 @@ import { RouterView } from "vue-router";
 import Logo from "@/components/Logo.vue";
 import router from "@/router";
 import { clientHttp } from "../libs/clientHttp"
-
+import HomeIcon from "./HomeIcon.vue";
+import CategoryIcon from "./CategoryIcon.vue";
+import ComptesIcon from "./ComptesIcon.vue";
+import PlanningIcon from "./PlanningIcon.vue";
+import Settings from "./Settings.vue";
+import Profil from "./Profil.vue"
+import LogOut from "./LogOut.vue"
 const userEmail = ref("")
 const token = localStorage.getItem('token')
 if (token) {

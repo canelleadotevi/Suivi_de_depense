@@ -31,7 +31,7 @@
                         </td>
 
                         <td>
-                          {{ expense.date }}
+                          {{ formatDate(expense.date) }}
                         </td>
 
                         <td>
@@ -138,6 +138,7 @@ import DeleteIcon from "@/components/DeleteIcon.vue";
 import { onMounted, ref, computed } from "vue";
 import { clientHttp } from "../libs/clientHttp";
 import { useToast } from "vue-toast-notification";
+import { format } from 'date-fns';
 const $toast = useToast();
 const myModal = document.getElementById('myModal')
 const myInput = document.getElementById('myInput')
@@ -186,13 +187,15 @@ async function getAllExpense() {
       const userExpenses = response.data.filter(expense => expense.user_id === userConnectedId.value)
       return expenses.value = userExpenses
     } else {
-      $toast.error("Erreur")
+    $toast.open({message: "Erreur",position: "top-right", duration: 3000})
     }
   } catch (error) {
-    $toast.error("Erreur")
+    $toast.open({message: "Erreur",position: "top-right", duration: 3000})
   }
 }
-
+function formatDate(date) {
+      return format(new Date(date), 'dd-MM-yyyy');
+    }
 const closeModal = () => {
   isModalOpen.value = false;
 };
@@ -202,7 +205,7 @@ async function getAllCategories() {
   try {
     const response = await clientHttp.get('/categories/getAllCategories')
     if (userConnectedId.value) {
-      const userCategories = response.data.filter(category => category.user_id === userConnectedId.value || category.user_id === null)
+      const userCategories = response.data.filter(category => category.user_id === userConnectedId.value )
       return categories.value = userCategories
     } else {
       console.log("l'id de l'utilisateur est manquant ")
@@ -216,18 +219,16 @@ const categoryNames = ref<{ [key: string]: string }>({});
 
 async function preloadCategoryNames() {
   try {
-    const categories = await getAllCategories(); // Récupère toutes les catégories
+    const categories = await getAllCategories(); 
     categories.forEach((category) => {
-      categoryNames.value[category._id] = category.name; // Stocke le nom associé à l'ID
+      categoryNames.value[category._id] = category.name;
     });
   } catch (error) {
     console.error("Erreur lors du préchargement des noms de catégories :", error);
   }
 }
 
-// ...
 
-// Modifier la méthode getCategoryName
 function getCategoryName(categoryId: string) {
   return categoryNames.value[categoryId] || "Catégorie inconnue";
 }
@@ -248,7 +249,8 @@ const selectCategory = ref("")
     });
 
     if (response.status === 200) {
-      expenses.value = response.data.expenses 
+      console.log('response',response)
+      expenses.value = response.data.expenses.filter(expense => expense.user_id === userConnectedId.value ) 
 
       selectCategory.value = "";
       selectDate.value = "";
@@ -301,10 +303,11 @@ try{
   console.log('expenseId',expenseId)
   const response = await  clientHttp.post(`/expenses/deleteExpense/${expenseId}`)
   getAllExpense();
-  $toast.success(response.data.message)
+  $toast.open({message: response.data.message,position: "top-right", duration: 3000})
 
 }catch(error){
-  $toast.error("Erreur")
+  $toast.open({message: "Erreur",position: "top-right", duration: 3000})
+
 }
 }
 

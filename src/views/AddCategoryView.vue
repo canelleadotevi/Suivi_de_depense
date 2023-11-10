@@ -9,12 +9,9 @@
           <div class="container">
             <div class="categorie_wrapper">
               <div class="categorie_content">
-                <div class="title">
-                  <h2>Mes catégories</h2>
-                </div>
                 <div class="add_category">
-                  <h3>Cliquez ici pour ajouter une catégorie</h3>
-                  <button @click="is_open = true">+</button>
+                  <h2>Vos catégories</h2>
+                  <button @click="is_open = true">ajouter</button>
                 </div>
                 <div class="all_categories">
 
@@ -29,7 +26,6 @@
                       </div>
                       <div class="category_item_content">
                         <div class="category_content_image" style="background-color: #17627a;">
-                          <!-- <img src="@/assets/images/user.jpg" /> -->
                         </div>
                         <div class="category_title">
                           <h2>{{ category.name }}</h2>
@@ -141,20 +137,7 @@ if (token) {
   userData.value.id = decodedToken.id;
 
 }
-/* async function createDefaultCategories() {
-  try {
 
-    defaultCategories.value.forEach((category) => {
-      category.user_id = userData.value.id;
-    });
-    const userId = userData.value.id; 
-    const ckeckAndCreate = await clientHttp.post(`/categories/createDefaultCategorie/${userId}`, { defaultCategories: defaultCategories.value })
-    console.log('ckeckAndCreate',ckeckAndCreate)
-  }catch(error){
-    console.log('error',error)
-  }
-}
- */
  async function createDefaultCategories() {
     try {
       console.log('defaultCategories',defaultCategories.value)
@@ -174,7 +157,7 @@ async function createCategory() {
     category.value.user_id = userId
     console.log('category.value', category.value)
     if (category.value.name.trim() === "" && userId?.trim() === "") {
-      $toast.error('Tous les champs sont requis')
+      $toast.open({message : "Tous les champs sont requis" ,position: "top-right", duration: 3000})
       return
     }
     const res = await clientHttp.post('/categories/createCategory', category.value);
@@ -184,7 +167,8 @@ async function createCategory() {
     is_open.value = false
     getAllCategories();
   } catch (error) {
-    $toast.error("Erreur");
+    $toast.open({message : "Erreur" ,position: "top-right", duration: 3000})
+
   }
 }
 const userConnectedId = ref("")
@@ -227,9 +211,11 @@ const updateCategory = async () => {
       const response = await clientHttp.post(`/categories/updateCategory/${selectedCategoryId.value}`, categoryData.value);
       getAllCategories();
       is_opened.value = false;
-      $toast.success(response.data.message)
+    $toast.open({message : response.data.message ,position: "top-right", duration: 3000})
+
     } catch (error) {
-      $toast.error("Erreur");
+    $toast.open({message: "Erreur",position: "top-right", duration: 3000})
+
     }
   } else {
     $toast.error('tous les champs sont requis')
@@ -240,9 +226,11 @@ const onDEleteCategoryClick = async (categoryId: string) => {
     console.log(categoryId)
     const response = await clientHttp.post(`/categories/deleteCategory/${categoryId}`)
     getAllCategories();
-    $toast.success(response.data.message)
+    $toast.open({message: response.data.message,position: "top-right", duration: 3000})
+
   } catch (error) {
-    $toast.error("Erreur")
+    $toast.open({message: "Erreur",position: "top-right", duration: 3000})
+
   }
 }
 

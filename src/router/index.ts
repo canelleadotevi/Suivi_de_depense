@@ -5,7 +5,6 @@ import SignupView from '@/views/SignupView.vue'
 import AccueilView from '@/views/AccueilView.vue'
 import AddCategoryView from '@/views/AddCategoryView.vue'
 import HomeView from '@/views/HomeView.vue'
-import ExpenseFilterView from '@/views/ExpenseFilterView.vue'
 import SigninView from '@/views/SigninView.vue'
 import VerifyEmailView from '@/views/VerifyEmailView.vue'
 const router = createRouter({
@@ -42,11 +41,6 @@ const router = createRouter({
       path: '/pLanification',
       name: 'Planification',
       component: PlanificationView
-    },
-    {
-      path:'/expensefilter',
-      name:'expensefilter',
-      component:ExpenseFilterView
     },
     {
       path:'/',

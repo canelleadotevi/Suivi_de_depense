@@ -55,7 +55,9 @@ import Linkedinicon from "./Linkedinicon.vue";
 import Twittericon from "@/components/Twittericon.vue";
 </script>
 <style scoped>
-
+footer{
+ position: absolute;
+}
 .footer_content li {
   display: flex;
   justify-content: center;
@@ -100,4 +102,18 @@ footer {
 .footer_li{
   list-style-type: none;
 }
+
+
+
+/* 
+footer {
+  width: 100%;
+  padding: 20px 0;
+  background-color: rgba(180, 180, 222, 0.544);
+  overflow-x: hidden;
+  position: absolute;
+  bottom: 0;
+
+} */
+
 </style>

@@ -31,7 +31,8 @@ import { clientHttp } from "../libs/clientHttp"
 const token = localStorage.getItem('token');
 const isModalOpen = ref(false)
 const userConnectedId = ref("")
-
+import { useToast } from "vue-toast-notification";
+const $toast = useToast();
 let userData = ref({
   id: ""
 })
@@ -77,7 +78,7 @@ async function getAllCategories() {
 }
 async function addExpense() {
   if (ExpenseData.value.date.trim() === "" || ExpenseData.value.cost === null || ExpenseData.value.wording.trim() === "" || ExpenseData.value.category_id.trim() === "" || ExpenseData.value.user_id.trim() === "") {
-    console.log("Veuillez remplir tous les champs")
+    $toast.open({message:"Veuilez remplir tous les champs",position: "top-right"})
     return
   } else {
     try {
@@ -89,11 +90,11 @@ async function addExpense() {
         category_id: "",
         user_id: userData.value.id
       }
-      isModalOpen.value = false
-      console.log(response.data)
+      $toast.open({ message :response.data.message, duration: 3000,position: "top-right"})
+      /* window.location.reload(); */
     }
     catch (error) {
-      console.log(error)
+      $toast.open({message : "erreur" ,position: "top-right", duration: 3000})
     }
   }
 
