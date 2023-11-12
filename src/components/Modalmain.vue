@@ -91,7 +91,10 @@ async function addExpense() {
         user_id: userData.value.id
       }
       $toast.open({ message :response.data.message, duration: 3000,position: "top-right"})
-      /* window.location.reload(); */
+      if(response.status === 200){
+      window.location.reload();
+
+      }
     }
     catch (error) {
       $toast.open({message : "erreur" ,position: "top-right", duration: 3000})
